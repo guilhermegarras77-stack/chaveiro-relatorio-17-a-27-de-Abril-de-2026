@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório de Desempenho Google Ads</title>
+    <!-- Tailwind CSS para o visual -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js para os gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Garante que o canvas não quebre o layout em ecrãs muito pequenos */
+        canvas {
+            max-width: 100% !important;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans text-gray-800 min-h-screen p-4 md:p-8">
+
+    <div class="max-w-6xl mx-auto">
+        <!-- Cabeçalho Responsivo -->
+        <header class="mb-6 md:mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+                <h1 class="text-2xl md:text-3xl font-bold text-gray-800">Relatório de Desempenho</h1>
+                <p class="text-gray-500 mt-1 text-sm md:text-base">Período: 17 a 27 de Abril de 2026</p>
+            </div>
+            <div class="bg-amber-100 text-amber-800 px-3 py-2 rounded-lg text-xs md:text-sm font-medium border border-amber-200 self-start md:self-auto">
+                ⚠️ Dados de vendas sujeitos a atualização (Sábado pendente)
+            </div>
+        </header>
+
+        <!-- Cartões de Resumo - Grid adaptável: 1 col (mobile), 2 cols (tablet), 3 cols (desktop) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+            
+            <!-- Faturamento -->
+            <div class="bg-green-600 p-5 md:p-6 rounded-xl shadow-md text-white flex flex-col justify-between">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="p-2 bg-white/20 rounded-lg">
+                        <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <span class="text-[10px] font-bold bg-white/20 px-2 py-1 rounded">VENDAS REAIS</span>
+                </div>
+                <div>
+                    <h3 class="text-green-100 text-xs md:text-sm font-medium uppercase tracking-wide">Faturamento Total</h3>
+                    <p class="text-2xl md:text-3xl font-bold mt-1">R$ 910<span class="text-lg opacity-70">,00</span></p>
+                </div>
+            </div>
+
+            <!-- ROAS -->
+            <div class="bg-white p-5 md:p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between border-l-4 border-l-green-500">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="p-2 bg-green-50 text-green-600 rounded-lg">
+                        <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-gray-500 text-xs md:text-sm font-medium uppercase tracking-wide">ROAS (Retorno)</h3>
+                    <p class="text-2xl md:text-3xl font-bold text-gray-800 mt-1">2.89x</p>
+                    <p class="text-[10px] md:text-xs text-gray-400 mt-1">Para cada R$ 1 investido, retornou R$ 2,89</p>
+                </div>
+            </div>
+
+            <!-- Custo Total -->
+            <div class="bg-white p-5 md:p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="p-2 bg-gray-100 text-gray-600 rounded-lg">
+                        <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-gray-500 text-xs md:text-sm font-medium uppercase tracking-wide">Investimento Ads</h3>
+                    <p class="text-2xl md:text-3xl font-bold text-gray-800 mt-1">R$ 315<span class="text-lg text-gray-400">,00</span></p>
+                </div>
+            </div>
+
+            <!-- Leads (Contatos) -->
+            <div class="bg-white p-5 md:p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="p-2 bg-blue-50 text-blue-600 rounded-lg">
+                        <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-gray-500 text-xs md:text-sm font-medium uppercase tracking-wide">Leads (Contatos)</h3>
+                    <p class="text-2xl md:text-3xl font-bold text-gray-800 mt-1">16</p>
+                </div>
+            </div>
+
+            <!-- Vendas Realizadas -->
+            <div class="bg-white p-5 md:p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="p-2 bg-indigo-50 text-indigo-600 rounded-lg">
+                        <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-gray-500 text-xs md:text-sm font-medium uppercase tracking-wide">Vendas Realizadas</h3>
+                    <p class="text-2xl md:text-3xl font-bold text-gray-800 mt-1">5</p>
+                    <p class="text-[10px] md:text-xs text-gray-400 mt-1">Taxa de fechamento: 31% dos leads</p>
+                </div>
+            </div>
+
+            <!-- Custo / Lead -->
+            <div class="bg-white p-5 md:p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between border-b-4 border-b-yellow-400">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="p-2 bg-yellow-50 text-yellow-600 rounded-lg">
+                        <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-gray-500 text-xs md:text-sm font-medium uppercase tracking-wide">Custo por Lead</h3>
+                    <p class="text-2xl md:text-3xl font-bold text-gray-800 mt-1">R$ 19<span class="text-lg text-gray-400">,66</span></p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Seção de Gráficos e Tabelas - Layout flexível -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+            
+            <!-- Gráfico 1: Funil Completo -->
+            <div class="bg-white p-5 md:p-6 rounded-xl shadow-sm border border-gray-100 lg:col-span-2">
+                <h3 class="text-lg font-semibold text-gray-800 mb-2">Funil de Vendas</h3>
+                <p class="text-xs md:text-sm text-gray-500 mb-6">Métricas de visualização, contacto e conversão final.</p>
+                <div class="relative h-64 md:h-72">
+                    <canvas id="funnelChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Detalhamento de Vendas -->
+            <div class="bg-white p-5 md:p-6 rounded-xl shadow-sm border border-gray-100">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">Detalhamento de Vendas</h3>
+                <div class="space-y-2 md:space-y-3">
+                    <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border border-gray-100">
+                        <span class="text-xs md:text-sm font-medium">Venda 1</span>
+                        <span class="text-sm md:text-base font-bold text-green-600">R$ 150,00</span>
+                    </div>
+                    <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border border-gray-100">
+                        <span class="text-xs md:text-sm font-medium">Venda 2</span>
+                        <span class="text-sm md:text-base font-bold text-green-600">R$ 250,00</span>
+                    </div>
+                    <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border border-gray-100">
+                        <span class="text-xs md:text-sm font-medium">Venda 3</span>
+                        <span class="text-sm md:text-base font-bold text-green-600">R$ 180,00</span>
+                    </div>
+                    <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border border-gray-100">
+                        <span class="text-xs md:text-sm font-medium">Venda 4</span>
+                        <span class="text-sm md:text-base font-bold text-green-600">R$ 150,00</span>
+                    </div>
+                    <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border border-gray-100">
+                        <span class="text-xs md:text-sm font-medium">Venda 5</span>
+                        <span class="text-sm md:text-base font-bold text-green-600">R$ 180,00</span>
+                    </div>
+                </div>
+                <div class="mt-4 pt-4 border-t border-dashed border-gray-200 flex justify-between items-center">
+                    <span class="text-xs md:text-sm text-gray-500">Total Acumulado</span>
+                    <span class="text-lg md:text-xl font-black text-gray-800">R$ 910,00</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Alerta de Insight - Otimizado para leitura em Mobile -->
+        <div class="bg-slate-900 text-white p-6 md:p-8 rounded-xl shadow-lg border-l-8 border-l-blue-500">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="bg-blue-500 p-1.5 rounded text-white flex-shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                </div>
+                <h3 class="text-lg md:text-xl font-bold tracking-tight">O que estes números significam?</h3>
+            </div>
+            <div class="space-y-4 text-slate-300 text-sm md:text-base leading-relaxed">
+                <p>
+                    Estamos a realizar <strong>ajustes constantes</strong> para garantir que os seus anúncios cheguem às pessoas com maior probabilidade de compra. Devido a estes ajustes, o Google entra numa <strong>"fase de aprendizagem"</strong>, onde o sistema testa novas formas de melhorar o seu lucro. Mesmo neste período de testes, os resultados já são excelentes: o retorno está em quase 3x o valor investido.
+                </p>
+                <p>
+                    <strong>O plano para a próxima semana:</strong> Vamos aumentar o investimento para atrair ainda mais clientes. O nosso foco será comparar se as vendas ocorrem mais no período da <strong>manhã ou da noite</strong>. Com esta informação, aplicaremos o maior investimento no horário que trouxer o retorno mais eficiente para o seu negócio.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Script para renderizar os gráficos -->
+    <script>
+        const ctxFunnel = document.getElementById('funnelChart').getContext('2d');
+        new Chart(ctxFunnel, {
+            type: 'bar',
+            data: {
+                labels: ['Impressões', 'Leads', 'Vendas'],
+                datasets: [{
+                    label: 'Volume',
+                    data: [633, 16, 5],
+                    backgroundColor: [
+                        '#94a3b8', 
+                        '#3b82f6', 
+                        '#10b981'
+                    ],
+                    borderRadius: 8,
+                    barPercentage: 0.6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { 
+                    legend: { display: false } 
+                },
+                scales: {
+                    y: { 
+                        beginAtZero: true, 
+                        grid: { borderDash: [4, 4], color: '#f3f4f6' },
+                        type: 'logarithmic',
+                        ticks: {
+                            callback: function(value) {
+                                return value;
+                            }
+                        }
+                    },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
